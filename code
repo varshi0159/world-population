@@ -1,0 +1,30 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load the data
+data = pd.read_csv('//content/API_SP.POP.TOTL_DS2_en_csv_v2_144171.csv', skiprows=4)
+
+# Select data for five countries
+countries = ['United States', 'China', 'India', 'Brazil', 'Nigeria']
+data = data[data['Country Name'].isin(countries)]
+
+# Select the most recent year for population data (e.g., 2021)
+latest_year = '2021'
+
+# Extract relevant columns
+pop_data = data[['Country Name', latest_year]]
+
+# Rename columns for convenience
+pop_data.columns = ['Country', 'Population']
+
+# Drop rows with missing population data
+pop_data = pop_data.dropna()
+
+# Plot the data
+plt.figure(figsize=(10, 6))
+plt.bar(pop_data['Country'], pop_data['Population'], color=['pink', 'blue', 'pink', 'blue', 'pink'])
+plt.xlabel('Country')
+plt.ylabel('Population')
+plt.title('Population Distribution of Selected Countries in 2021')
+plt.xticks(rotation=45)
+plt.show()
